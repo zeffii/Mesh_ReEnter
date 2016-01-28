@@ -15,10 +15,12 @@ The point of this repo is to show approaches to this problem. Ideally the script
     row = layout.row()
     kind = obj.get('kind')
     if kind in ['circle', 'gear', 'bolt', 'diamond']:
-        properties = getattr(obj, 'parametric_' + kind)
-        if properties:
+        props = getattr(obj, 'parametric_' + kind)
+        if props:
             col = l.column()
-            for propname in properties.keys():
-                col.prop(properties, propname)
+            
+            for propname in props.rna_type.properties.keys():
+                if not propname in {'rna_type', 'name'}:
+                    col.prop(props, propname)
        
 ```
